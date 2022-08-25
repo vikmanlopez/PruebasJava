@@ -20,4 +20,17 @@ public class Coneccion {
 		}
 		return con;
 	}
+	
+	public static void desconectar(Connection con) {
+		
+			try {
+				if(con != null) {
+				con.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("Error al cerrar conección " + e.getMessage());
+			}
+		
+		
+	}
 }
