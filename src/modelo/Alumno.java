@@ -1,5 +1,6 @@
 package modelo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Alumno {
@@ -38,6 +39,15 @@ public class Alumno {
 	public void setFechaNac(Date fechaNac) {
 		this.fechaNac = fechaNac;
 	}
+	
+	/*Para sacar fecha*/
+	public String getFechaStr() {
+		String formato = "dd/MM/yyyy - HH:mm:ss";
+		 SimpleDateFormat f = new SimpleDateFormat(formato);
+		 return f.format(this.fechaNac);
+		 
+	}
+	
 	@Override
 	public String toString() {
 		return "Alumno [id_alumno=" + id_alumno + ", identificador=" + identificador + ", nombre=" + nombre
