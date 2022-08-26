@@ -2,6 +2,7 @@ package coneccion;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Coneccion {
@@ -28,9 +29,32 @@ public class Coneccion {
 				con.close();
 				}
 			} catch (SQLException e) {
-				System.out.println("Error al cerrar conección " + e.getMessage());
+				System.out.println("Error al cerrar conección: " + e.getMessage());
 			}
 		
+	}
+	
+	public static PreparedStatement preparedStatement(Connection con, String sql){
+		PreparedStatement pstm = null;
+		
+		try {
+			pstm = con.prepareStatement(sql);
+		} catch (SQLException e) {
+			System.out.println("Error al crear PreparedStatement: "+e.getMessage());
+		}
+		return pstm;
+	}
+	
+	public static void cerrarPreparedStatement(PreparedStatement pstm) {
+		
+		try {
+			if(pstm != null) {
+			pstm.close();
+			}
+		} catch (SQLException e) {
+			System.out.println("Error ala cerrar preparedStatement: "+e.getMessage());
+		}
 		
 	}
+	
 }

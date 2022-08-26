@@ -23,7 +23,7 @@ public class AlumnoDaoImpl implements AlumnoDao{
 		con = Coneccion.conectar();
 		
 	    try {
-			pstm = con.prepareStatement(sql);
+			pstm = Coneccion.preparedStatement(con, sql);
 			//parametros
 			pstm.setString(1, obj.getNombre());
 			pstm.setString(2, obj.getApellido());
@@ -34,6 +34,9 @@ public class AlumnoDaoImpl implements AlumnoDao{
 			resultado = pstm.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("Error al ejecutar query de insert : "+ e.getMessage());
+		}finally {
+			Coneccion.desconectar(con);
+			Coneccion.cerrarPreparedStatement(pstm);
 		}
 		
 		return resultado;
@@ -57,8 +60,10 @@ public class AlumnoDaoImpl implements AlumnoDao{
 			
 			resultado = pstm.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error al modificar alumno: "+ e.getMessage());
+		}finally {
+			Coneccion.desconectar(con);
+			Coneccion.cerrarPreparedStatement(pstm);
 		}
 		
 		return resultado;
