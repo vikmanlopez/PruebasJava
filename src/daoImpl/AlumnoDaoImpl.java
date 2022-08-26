@@ -8,6 +8,7 @@ import java.util.List;
 import coneccion.Coneccion;
 import dao.AlumnoDao;
 import modelo.Alumno;
+import utilidades.Util;
 
 public class AlumnoDaoImpl implements AlumnoDao{
 
@@ -27,7 +28,7 @@ public class AlumnoDaoImpl implements AlumnoDao{
 			pstm.setString(1, obj.getNombre());
 			pstm.setString(2, obj.getApellido());
 			pstm.setString(3, obj.getIdentificador());
-			pstm.setDate(4, new java.sql.Date(obj.getFechaNac().getTime()));
+			pstm.setDate(4, Util.sqlDate(obj.getFechaNac()));
 			
 			
 			resultado = pstm.executeUpdate();
