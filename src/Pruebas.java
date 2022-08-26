@@ -28,9 +28,20 @@ public class Pruebas {
 		a.setIdentificador("AA000");		
 		a.setFechaNac(new Date());
 		
-		int resultado = dao.insertar(a);
+		int resultado = 0;//dao.insertar(a);
 		if(resultado == 1) {
 			System.out.println("El alumno fue insertado exitosamente");
+		}
+		// --- Prueba Actualizacion
+		Alumno b = new Alumno();
+		b.setNombre("Juan1");
+		b.setApellido("Perez");
+		b.setIdentificador("AA001");		
+		b.setFechaNac(new Date());
+		
+		int resultadoU = dao.modificar(b);
+		if(resultadoU == 1) {
+			System.out.println("El alumno fue modificado exitosamente");
 		}
 	}
 

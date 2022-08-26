@@ -41,8 +41,27 @@ public class AlumnoDaoImpl implements AlumnoDao{
 
 	@Override
 	public int modificar(Alumno obj) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "UPDATE alumno SET nombre = ?, apellido = ?, fechaNac = ? WHERE alumno.identificador = ? ";
+		
+		Connection con = null;
+		PreparedStatement pstm = null;
+		int resultado = 0;
+		
+		con = Coneccion.conectar();
+		try {
+			pstm = con.prepareStatement(sql);
+			pstm.setString(1, obj.getNombre());
+			pstm.setString(2, obj.getApellido());
+			pstm.setDate(3, Util.sqlDate(obj.getFechaNac()));
+			pstm.setString(4, obj.getIdentificador());
+			
+			resultado = pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return resultado;
 	}
 
 	@Override
