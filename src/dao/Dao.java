@@ -8,7 +8,7 @@ public interface Dao <T,K>{ // T es cualquier objeto y K es la llave primaria
 	public int eliminar(T obj);
 	public List<T> listar();
 	public T obtenerPorId(K id);
-	public T obtenerPorIdentificacion(String id);
+	public T obtenerPorIdentificacion(String identificacion);
 	
 
 }

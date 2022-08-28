@@ -2,7 +2,9 @@ package daoImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import coneccion.Coneccion;
@@ -71,26 +73,129 @@ public class AlumnoDaoImpl implements AlumnoDao{
 
 	@Override
 	public int eliminar(Alumno obj) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "DELETE FROM test.alumno WHERE id_alumno= ?";
+		
+		Connection con = null;
+		PreparedStatement pstm = null;
+		int resultado = 0;
+		
+		con = Coneccion.conectar();
+		pstm = Coneccion.preparedStatement(con, sql);
+		
+		try {
+			pstm.setLong(1, obj.getId_alumno());
+			
+			resultado = pstm.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("Error al eliminar Alumno "+e.getMessage());
+		}finally {
+			Coneccion.desconectar(con);
+			Coneccion.cerrarPreparedStatement(pstm);
+		}
+		return resultado;
 	}
 
 	@Override
 	public List<Alumno> listar() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM test.alumno";
+		
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rst = null;
+		List<Alumno> lst = new ArrayList<>();
+		Alumno a = null;
+		
+		con = Coneccion.conectar();
+		pstm = Coneccion.preparedStatement(con, sql);
+		
+		try {
+			rst = pstm.executeQuery();
+			
+			while (rst.next()) {
+				a = new Alumno();
+				a.setId_alumno(rst.getLong("id_alumno"));
+				a.setNombre(rst.getString("nombre"));
+				a.setApellido(rst.getString("apellido"));
+				a.setIdentificador(rst.getString("identificador"));
+				a.setFechaNac(rst.getDate("fechaNac"));
+				lst.add(a);				
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error al obtener listado de alumnos " + e.getMessage());
+		}finally {
+			Coneccion.desconectar(con);
+			Coneccion.cerrarPreparedStatement(pstm);
+		}	
+		return lst;
+	}
+
+	
+
+	@Override
+	public Alumno obtenerPorIdentificacion(String id) {
+		String sql = "SELECT * FROM test.alumno where identificador  = ?";
+		
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rst = null;
+		Alumno a = null;
+		
+		con = Coneccion.conectar();
+		pstm = Coneccion.preparedStatement(con, sql);
+		
+		try {
+			rst = pstm.executeQuery();
+			while (rst.next()) {
+				a = new Alumno();
+				a.setId_alumno(rst.getLong("id_alumno"));
+				a.setNombre(rst.getString("nombre"));
+				a.setApellido("apellido");
+				a.setIdentificador("identificador");
+				a.setFechaNac(rst.getDate("fechaNac"));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Error al obtener alumno por identificacion " + e.getMessage());
+		}finally {
+			Coneccion.desconectar(con);
+			Coneccion.cerrarPreparedStatement(pstm);
+		}
+				
+		return a;
 	}
 
 	@Override
 	public Alumno obtenerPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Alumno obtenerPorIdentificacion(String id) {
-		// TODO Auto-generated method stub
-		return null;
+    String sql = "SELECT * FROM test.alumno where id_alumno  = ?";
+		
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rst = null;
+		Alumno a = null;
+		
+		con = Coneccion.conectar();
+		pstm = Coneccion.preparedStatement(con, sql);
+		
+		try {
+			rst = pstm.executeQuery();
+			while (rst.next()) {
+				a = new Alumno();
+				a.setId_alumno(rst.getLong("id_alumno"));
+				a.setNombre(rst.getString("nombre"));
+				a.setApellido("apellido");
+				a.setIdentificador("identificador");
+				a.setFechaNac(rst.getDate("fechaNac"));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Errro al obtener alumno por id :" + e.getMessage());
+		}finally {
+			Coneccion.desconectar(con);
+			Coneccion.cerrarPreparedStatement(pstm);
+		}
+				
+		return a;
 	}
 
 }

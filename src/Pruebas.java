@@ -1,5 +1,8 @@
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import coneccion.Coneccion;
 import dao.AlumnoDao;
@@ -23,12 +26,12 @@ public class Pruebas {
 		AlumnoDao dao = new AlumnoDaoImpl();
 		
 		Alumno a = new Alumno();
-		a.setNombre("Juan");
+		a.setNombre("Viktor");
 		a.setApellido("Perez");
 		a.setIdentificador("AA000");		
 		a.setFechaNac(new Date());
 		
-		int resultado = 0;//dao.insertar(a);
+		int resultado = 0;// dao.insertar(a);
 		if(resultado == 1) {
 			System.out.println("El alumno fue insertado exitosamente");
 		}
@@ -42,6 +45,16 @@ public class Pruebas {
 		int resultadoU = dao.modificar(b);
 		if(resultadoU == 1) {
 			System.out.println("El alumno fue modificado exitosamente");
+			
+	   // Pruba Listar alumnos
+			List<Alumno> lst = new ArrayList<>();
+			lst = dao.listar();
+			for (int i = 0; i < lst.size() ;i++) {
+				Alumno aa = lst.get(i);
+				System.out.println(aa.toString()+"   fecha formateada: "+ aa.getFechaStr());
+			}
+				
+			
 		}
 	}
 
